@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <!-- Bulma CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=East+Sea+Dokdo&display=swap" rel="stylesheet">
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+            crossorigin="anonymous"></script>
+    <!--fontawesome.com 킷코드 -->
+    <script src="https://kit.fontawesome.com/a7ba073e1a.js" crossorigin="anonymous"></script>
+
+    <title>Coming Soon</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Jua&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Gugi&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            font-family: 'Gowun Dodum', sans-serif;
+        }
+
+        .mypost {
+
+            box-shadow: 0px 0px 3px 0px #63313A;
+            width: 95%;
+            max-width: 500px;
+
+
+            margin: 20px auto 0px auto;
+            padding: 20px;
+        }
+
+        .write-btn {
+            background-color: #63313A;
+        }
+
+        .mybtns {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+
+            margin: 20px;
+        }
+
+        .row {
+            margin: 20px auto 0px auto;
+            width: 95%;
+            max-width: 1200px;
+            padding-bottom: 20px;
+        }
+
+        .pointer {
+            cursor: pointer;
+        }
+
+        .hero {
+            background-color: #63313A;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+
+        }
+
+        .main_img {
+            background-image: url("/static/comingsoon_main.png");
+            margin: 25px 0 0 0;
+            max-width: 500px;
+            height: 181px;
+            opacity: 0.8;
+            width: 100%;
+
+        }
+
+        .hero.is-medium .hero-body {
+            padding: 0 0 0 0;
+            height: 100px;
+        }
+
+        .out {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+        }
+
+        .mypost {
+            box-shadow: 0px 0px 3px 0px gray;
+            width: 95%;
+            max-width: 500px;
+
+
+            margin: 20px auto 0px auto;
+            padding: 20px;
+        }
+
+        .mybtns {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+
+            margin: 20px;
+        }
+
+        .row {
+            margin: 20px auto 0px auto;
+            width: 95%;
+            max-width: 1200px;
+            padding-bottom: 20px;
+        }
+
+        .pointer {
+            cursor: pointer;
+        }
+
+        .title {
+            padding: 10px;
+            font-family: 'Gugi', cursive;
+            font-size: 40px;
+            color: #b9a6a9;
+            font-weight: 50;
+            opacity: 0.6;
+        }
+
+        .help {
+            font-size: 20px;
+        }
+        .open {
+            width: 200px;
+            height: 50px;
+
+            background-color: transparent;
+            color: white;
+
+            border-radius: 50px;
+            border: 1px solid white;
+            margin-bottom: 20px;
+            margin-top: -20px;
+        }
+        .mybtns > button{
+            margin-left: 10px;
+        }
+
+    </style>
+    <script>
+        function open_box() {
+            $('#post_box').show()
+        }
+
+        function close_box() {
+            $('#post_box').hide()
+        }
+        function save_movie() {
+            var url = $('#url').val()
+            var title = $('#title').val()
+            var actor = $('#actor').val()
+            var director = $('#director').val()
+            var date = $('#date').val()
+            var comment = $('#comment').val()
+
+            if (url == "" | title == "" | actor == "" | director == "" | date == "" | comment == "") {
+                alert("빈칸이 있습니다.")
+                return
+            }
+            $.ajax({
+                type: "POST",
+                url: `/save_movie`,
+                data: {
+                    url_give: url,
+                    title_give: title,
+                    actor_give: actor,
+                    director_give: director,
+                    date_give: date,
+                    comment_give: comment
+                },
+                success: function (response) {
+                    alert(response["msg"])
+                    window.location.reload()
+
+                }
+            });
+        }
+
+        function del(num) {
+            $.ajax({
+                type: "POST",
+                url: "/posts/del",
+                data: {num_give: num},
+                success: function (response) {
+                    alert(response["msg"])
+                    window.location.reload()
+                }
+            });
+        }
+
+        function like(num) {
+            $.ajax({
+                type: "POST",
+                url: "/post/like",
+                data: {num_give: num},
+                success: function () {
+                    window.location.reload()
+                }
+            });
+        }
+
+
+        function address_check() {
+            let title = $('#url').val()
+            $.ajax({
+                type: "POST",
+                url: "/index/check",
+                data: {
+                    title_give: title
+                },
+                success: function (response) {
+                    $('#help-id').text(response['title'])
+                }
+            });
+        }
+
+        function sign_out() {
+            $.removeCookie('mytoken', {path: '/'});
+            alert('로그아웃!')
+            window.location.href = "/"
+        }
+    </script>
+</head>
+<body>
+<section class="hero is-medium">
+    <button onclick="sign_out()" type="button" class="btn btn-dark write-btn out">로그아웃</button>
+    <div class="main_img"></div>
+    <div class="hero-body">
+        <p class="title">
+            우 &nbsp;&nbsp;리 &nbsp;&nbsp;가 &nbsp;&nbsp;기 &nbsp;&nbsp;다 &nbsp;&nbsp;려 &nbsp;&nbsp;온 &nbsp;&nbsp;영&nbsp;&nbsp;
+            화
+        </p>
+    </div>
+    <button onclick="open_box()" type="button" class="btn btn-warning open">기록하기</button>
+</section>
+<div class="mypost" id="post_box" style="display: none">
+    <div class="mb-3">
+        <div class="input-group mb-3">
+            <input type="text" class="form-control" id="url" placeholder="네이버영화 url" aria-label="Recipient's username"
+                   aria-describedby="button-addon2">
+            <button class="btn btn-outline-secondary" type="button" id="button-addon2" onclick="address_check()">제목 확인
+            </button>
+        </div>
+        <p id="help-id" class="help">제목 표시 </p>
+        <input type="text" class="form-control" id="actor" placeholder="주요 캐스팅 배우">
+        <label class="form-label"></label>
+        <input type="text" class="form-control" id="director" placeholder="감독">
+        <label class="form-label"></label>
+        <input type="text" class="form-control" id="date" placeholder="개봉날짜">
+    </div>
+    <div class="form-floating">
+        <textarea class="form-control" placeholder="Leave a comment here" id="comment"></textarea>
+        <label for="comment">시놉시스</label>
+    </div>
+    <div class="mybtns">
+        <button onclick="save_movie()" type="button" class="btn btn-dark write-btn">기록하기</button>
+        <button onclick="close_box()" type="button" class="btn btn-warning">닫기</button>
+    </div>
+</div>
+<div class="row row-cols-md-3 g-4">
+    {% for movie in posts %}
+        {% set title=movie.title %}
+        {% set image=movie.image %}
+        {% set director=movie.director %}
+        {% set date=movie.date %}
+        {% set actor=movie.actor %}
+        {% set comment=movie.comment %}
+        {% set num=movie.num %}
+        <div class="wrap">
+            <div id="cards_box">
+                <div class="col">
+                    <div class="card h-100">
+                        <a data-bs-toggle="modal" class="btn btn-dark"
+                           data-bs-target="[id='{{ num }}']"><IMG
+                                src="{{ image }}"
+                                border="0"
+                                class="card-img-top pointer"
+                                alt="..."></a>
+                        <div class="card-body">
+                            <h5 class="card_title">{{ title }}</h5>
+                            <p>
+                                <button type="button" onclick="like({{ num }})" class="btn btn-danger"><i
+                                        class="fa-solid fa-heart"></i> <span class="likes">{{ movie.like }}</span>
+                                </button>
+
+                                <button type="button" onclick="del({{ num }})" class="btn btn-dark"><i
+                                        class="fa-solid fa-trash-can"></i></button>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Modal -->
+        <div class="modal fade" id="{{ num }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">{{ title }}</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="card h-100">
+                            <a><IMG src="{{ image }}"
+                                    border="0"
+                                    class="card-img-top"
+                                    alt="..."></a>
+                            <div class="card-body">
+                                <p class="card_address">
+                                <p>배우 {{ actor }}</p>
+                                <p>감독 {{ director }}</p>
+                                <p>개봉날짜 {{ date }}</p>
+                                <p>시놉시스
+                                <p>{{ comment }}</p></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+</body>
+</html>
